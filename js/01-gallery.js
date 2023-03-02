@@ -22,59 +22,32 @@ function createMarkup(items) {
     )
     .join("");
 }
-// // Вариант 1
-// galleryRef.addEventListener("click", (evt) => {
-//   evt.preventDefault();
-//   if (evt.target.nodeName !== "IMG") {
-//     return;
-//   }
-//   const modal = basicLightbox.create(
-//     `
-//      		<img width="1400" height="900" src="${evt.target.dataset.source}">
-//      	`
-//   );
-//   modal.show();
 
-//   window.addEventListener("keydown", onCloseModal);
-//   function onCloseModal(event) {
-//     console.log(event.code);
-//     const ESC_KEY_CODE = "Escape";
-//     if (event.code === ESC_KEY_CODE) {
-//       modal.close();
-//       window.removeEventListener("keydown", onCloseModal);
-//     }
-//   }
-// });
+galleryRef.addEventListener("click", onImageClick);
 
-// Вариант 2
-galleryRef.addEventListener("click", (evt) => {
+function onImageClick(evt) {
   evt.preventDefault();
   if (evt.target.nodeName !== "IMG") {
     return;
   }
-  openModal(evt.target.dataset.source);
-  window.addEventListener("keydown", OnEscPress);
-});
-
-function openModal(params) {
-  basicLightbox
-    .create(
-      `
-  		<img width="1400" height="900" src="${params}">
-  	`
-    )
-    .show();
-}
-
-function onCloseModalEsc() {
-  const modalRef = document.querySelector(".basicLightbox");
-  window.removeEventListener("keydown", OnEscPress);
-  modalRef.classList.remove("basicLightbox--img");
-  modalRef.classList.remove("basicLightbox--visible");
-}
-function OnEscPress(event) {
-  const ESC_KEY_CODE = "Escape";
-  if (event.code === ESC_KEY_CODE) {
-    onCloseModalEsc();
+  const modal = basicLightbox.create(
+    `
+     		<img src="${evt.target.dataset.source}" width="1400" height="900">`,
+    {
+      onShow: (instance) => {
+        document.addEventListener("keydown", onEscBtn);
+      },
+      onClose: (instance) => {
+        document.removeEventListener("keydown", onEscBtn);
+      },
+    }
+  );
+  modal.show();
+  function onEscBtn(event) {
+    // console.log(event.code);
+    const ESC_KEY_CODE = "Escape";
+    if (event.code === ESC_KEY_CODE) {
+      modal.close();
+    }
   }
 }

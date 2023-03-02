@@ -25,7 +25,9 @@ function onImgClick(evt) {
     return;
   }
 }
-
+// Инициализация библиотеки +добавь отображение подписей к изображениям
+// из атрибута alt.Пусть подпись будет снизу и появляется через
+// 250 миллисекунд после открытия изображения.
 var lightbox = new SimpleLightbox(".gallery a", {
   captionsData: "alt",
   captionDelay: 250,
