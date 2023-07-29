@@ -1,5 +1,4 @@
 import { galleryItems } from "./gallery-items.js";
-// Change code below this line
 
 const galleryRef = document.querySelector(".gallery");
 const markup = createMarkup(galleryItems);
@@ -44,7 +43,6 @@ function onImageClick(evt) {
   );
   modal.show();
   function onEscBtn(event) {
-    // console.log(event.code);
     const ESC_KEY_CODE = "Escape";
     if (event.code === ESC_KEY_CODE) {
       modal.close();
